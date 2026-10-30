@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1118">
+  <meta name="description" content="Последний сигнал — кинематографичная интерактивная история о выживании, памяти и выборе.">
+  <title>Последний сигнал — интерактивная история</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main id="app">
+    <section id="menu-screen" class="screen menu-screen" aria-label="Главное меню">
+      <div class="menu-backdrop"></div>
+      <header class="brand-lockup">
+        <div class="brand-kicker"><span class="signal-dot"></span> ИНТЕРАКТИВНАЯ ИСТОРИЯ · 2039</div>
+        <h1>ПОСЛЕДНИЙ<br><em>СИГНАЛ</em></h1>
+        <p class="brand-subtitle">Иногда, чтобы выжить, нужно услышать больше,<br class="desktop-only"> чем просто сигнал.</p>
+      </header>
+      <nav class="main-menu" aria-label="Главное меню">
+        <button class="menu-button primary" data-action="new-game"><span class="menu-glyph">▶</span> Новая игра</button>
+        <button class="menu-button" data-action="continue" id="continue-button" disabled><span class="menu-glyph">↗</span> Продолжить <small id="continue-caption">Сохранение не найдено</small></button>
+        <button class="menu-button" data-action="chapters"><span class="menu-glyph">▤</span> Выбор главы</button>
+        <button class="menu-button" data-action="gallery"><span class="menu-glyph">▧</span> Галерея</button>
+        <button class="menu-button" data-action="characters"><span class="menu-glyph">◉</span> Персонажи</button>
+        <button class="menu-button" data-action="settings"><span class="menu-glyph">⚙</span> Настройки</button>
+      </nav>
+      <div class="menu-footer"><span>ВЕРСИЯ 1.0 · РЕЛИЗ</span><span>ИСТОРИЯ О ВЫБОРЕ И ПАМЯТИ</span><span class="save-indicator" id="menu-save-state">Локальное сохранение</span></div>
+      <div class="menu-side-note">91.7 MHz<br><span>NO SIGNAL IS EVER INNOCENT</span></div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" hidden aria-label="Игровая сцена">
+      <div class="game-backdrop" id="scene-backdrop"></div>
+      <div class="game-vignette"></div>
+      <div class="cg-stage" id="cg-stage" aria-label="Сюжетная иллюстрация" hidden></div>
+      <header class="game-topbar">
+        <button class="icon-button" data-action="home" aria-label="Главное меню" title="Главное меню">⌂</button>
+        <div class="chapter-meta"><div id="chapter-label">ГЛАВА 1</div><strong id="scene-label">Непрошеный спаситель</strong></div>
+        <div class="topbar-actions">
+          <button class="icon-button" data-action="history" aria-label="История диалогов" title="История">☷</button>
+          <button class="icon-button" data-action="save" aria-label="Сохранить игру" title="Сохранить">▣</button>
+          <button class="icon-button" data-action="settings" aria-label="Настройки" title="Настройки">⚙</button>
+        </div>
+      </header>
+
+      <div class="scene-progress"><span id="progress-fill"></span></div>
+      <div class="scene-number" id="scene-number">01 / 12</div>
+      <div class="stage-character" id="stage-character" aria-hidden="true"></div>
+      <div class="scene-caption" id="scene-caption" aria-live="polite"></div>
+
+      <section class="dialog-panel" aria-label="Диалог">
+        <div class="dialog-topline">
+          <div class="speaker-lockup"><span class="speaker-mark"></span><span id="speaker-name">Вита</span></div>
+          <div class="dialog-chapter" id="dialog-location">ЗАБРОШЕННЫЙ СУПЕРМАРКЕТ</div>
+        </div>
+        <div class="dialog-text-wrap">
+          <p id="dialog-text" class="dialog-text" aria-live="polite"></p>
+        </div>
+        <div class="dialog-bottom">
+          <div class="dialog-tools">
+            <button class="text-tool" data-action="skip" id="skip-button">Пропустить текст <kbd>SHIFT</kbd></button>
+            <button class="text-tool" data-action="auto" id="auto-button" aria-pressed="false">Авточтение <span class="toggle-dot"></span></button>
+          </div>
+          <button id="advance-button" class="advance-button" data-action="advance">Продолжить <span>→</span></button>
+        </div>
+        <div id="choice-list" class="choice-list" hidden></div>
+      </section>
+
+      <aside class="stat-rail" id="stat-rail" aria-label="Показатели героини">
+        <div class="stat-item" title="Близость"><span class="stat-icon rose">♡</span><span class="stat-name">Близость</span><span class="stat-track"><i id="stat-closeness"></i></span><b id="stat-closeness-value">0</b></div>
+        <div class="stat-item" title="Доверие"><span class="stat-icon blue">⌑</span><span class="stat-name">Доверие</span><span class="stat-track"><i id="stat-trust"></i></span><b id="stat-trust-value">0</b></div>
+        <div class="stat-item" title="Решимость"><span class="stat-icon amber">⌁</span><span class="stat-name">Решимость</span><span class="stat-track"><i id="stat-resolve"></i></span><b id="stat-resolve-value">0</b></div>
+        <div class="stat-item" title="Ресурсы"><span class="stat-icon mint">▤</span><span class="stat-name">Ресурсы</span><span class="stat-track"><i id="stat-resources"></i></span><b id="stat-resources-value">0</b></div>
+      </aside>
+
+      <footer class="game-footer"><span>ПОСЛЕДНИЙ СИГНАЛ <i>·</i> 91.7</span><span id="autosave-label">Автосохранение включено</span><span id="playtime-label">00:00</span></footer>
+    </section>
+
+    <section id="modal-layer" class="modal-layer" hidden aria-modal="true" role="dialog" aria-labelledby="modal-title">
+      <div class="modal-backdrop" data-action="close-modal"></div>
+      <div class="modal-card">
+        <header class="modal-header"><div><span class="modal-eyebrow" id="modal-eyebrow">ПОСЛЕДНИЙ СИГНАЛ</span><h2 id="modal-title">Меню</h2></div><button class="icon-button modal-close" data-action="close-modal" aria-label="Закрыть">×</button></header>
+        <div id="modal-content" class="modal-content"></div>
+        <footer class="modal-footer"><span id="modal-footnote">Все данные хранятся в этом браузере.</span><button class="subtle-button" data-action="close-modal">Закрыть</button></footer>
+      </div>
+    </section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script src="src/story.js"></script>
+  <script src="src/engine.js"></script>
+  <script>if ('serviceWorker' in navigator && location.protocol !== 'file:') { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {})); }</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "Последний сигнал",
+  "short_name": "Последний сигнал",
+  "description": "Интерактивная история о выживании, памяти и выборе.",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#091119",
+  "theme_color": "#0a1118",
+  "icons": [
+    {"src":"assets/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
